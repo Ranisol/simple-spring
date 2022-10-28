@@ -1,0 +1,6 @@
+rootProject.name = "simple-spring"
+include "simple-core"
+include "simple-jpa"
+include "simple-webmvc"
+include "simple-batch"
+include "simple-framework-data-access"

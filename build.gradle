@@ -1,0 +1,37 @@
+
+
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'org.springframework.boot' version '2.7.4'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+}
+// dependencies
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply {
+        plugin 'java'
+        plugin 'groovy'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // lombok
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        compileOnly 'org.projectlombok:lombok:1.18.20'
+        // slf4j
+        implementation 'org.slf4j:slf4j-api:1.7.30'
+        // logback
+        implementation 'ch.qos.logback:logback-classic:1.2.3'
+        // junit5
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    }
+}
