@@ -1,13 +1,11 @@
-package source.boot.bean;
+package source.context.bean;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
@@ -22,6 +20,7 @@ public class ExampleService implements
         BeanNameAware,
         BeanClassLoaderAware,
         BeanFactoryAware,
+        ApplicationContextAware,
         InitializingBean,
         EnvironmentAware,
         ServletContextAware
@@ -59,5 +58,10 @@ public class ExampleService implements
     @Override
     public void setServletContext(ServletContext servletContext) {
         log.info("My ServletContext is: " + servletContext);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        log.info("My ApplicationContext is: " + applicationContext);
     }
 }
