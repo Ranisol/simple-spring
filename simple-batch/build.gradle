@@ -22,4 +22,6 @@ dependencies {
     // lombok
     annotationProcessor "org.projectlombok:lombok"
     implementation "org.projectlombok:lombok"
+    // h2 database
+    runtimeOnly "com.h2database:h2"
 }
