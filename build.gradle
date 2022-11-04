@@ -3,10 +3,7 @@
 plugins {
     id 'java'
     id 'groovy'
-    id 'org.springframework.boot' version "${springBootVersion}"
-    id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
 }
-// dependencies
 
 repositories {
     mavenCentral()
@@ -34,5 +31,7 @@ subprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
     }
+
 }
+
 

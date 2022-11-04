@@ -11,6 +11,7 @@ public class GracefullyShutdownConfig {
     public GracefullyShutdown shutdown() {
         return new GracefullyShutdown();
     }
+
     @Bean
     public ConfigurableServletWebServerFactory webServerFactory(final GracefullyShutdown shutdown) {
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();

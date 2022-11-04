@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class GracefullyShutdown implements TomcatConnectorCustomizer, ApplicationListener<ContextClosedEvent> {
     private static final Logger log = LoggerFactory.getLogger(GracefullyShutdown.class);
 
-    private static final int TIMEOUT = 30;
+    private static final int TIMEOUT = 60;
 
     private volatile Connector connector;
 
@@ -30,6 +30,7 @@ public class GracefullyShutdown implements TomcatConnectorCustomizer, Applicatio
         if (executor instanceof ThreadPoolExecutor) {
             try {
                 ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executor;
+                log.info("GracefullyShutdown: Tomcat thread pool gracefully shutdown");
                 threadPoolExecutor.shutdown();
                 if (!threadPoolExecutor.awaitTermination(TIMEOUT, TimeUnit.SECONDS)) {
                     log.warn("Tomcat thread pool did not shut down gracefully within "
