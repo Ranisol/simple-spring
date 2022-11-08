@@ -13,6 +13,14 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // mysql
+    implementation 'mysql:mysql-connector-java'
+    // test h2 database
+    testImplementation 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2'
+    // test
 
     // spring boot web mvc
     implementation 'org.springframework.boot:spring-boot-starter-web'
