@@ -28,13 +28,13 @@ public class SimpleOrderCreateEventTransactionalAsyncHandlers {
     @Async
     @TransactionalEventListener
     public void sendRealtimeStatics(SimpleOrderCreateEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void sendPoint(SimpleOrderCreateEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // statics fail event
@@ -47,12 +47,12 @@ public class SimpleOrderCreateEventTransactionalAsyncHandlers {
     @Async
     @TransactionalEventListener
     public void sendRealtimeStatics(SimpleOrderCreateStaticsFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrderFail(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrderFail(event.getOrder());
     }
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void sendPoint(SimpleOrderCreateStaticsFailEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 }

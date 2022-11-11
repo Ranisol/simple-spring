@@ -20,7 +20,7 @@ public class SimpleOrderCreateEventListener implements ApplicationListener<Simpl
     public void onApplicationEvent(SimpleOrderCreateEvent event) {
         log.info("Event received: " + event);
         simpleMailService.sendMail(event.getOrder().getUserEmail());
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 }

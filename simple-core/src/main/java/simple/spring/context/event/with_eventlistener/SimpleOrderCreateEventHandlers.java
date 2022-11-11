@@ -20,30 +20,31 @@ public class SimpleOrderCreateEventHandlers {
     // success events
     @EventListener
     public void sendMail(SimpleOrderCreateEvent event) {
+
         simpleMailService.sendMail(event.getOrder().getUserEmail());
     }
 
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreateEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @EventListener
     public void sendPoint(SimpleOrderCreateEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // statics fail events
     @Order(1)
     @EventListener
     public void sendPoint(SimpleOrderCreateStaticsFailEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     @Order(2)
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreateStaticsFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrderFail(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrderFail(event.getOrder());
     }
 
     @Order(3)
@@ -56,13 +57,13 @@ public class SimpleOrderCreateEventHandlers {
     @Order(1)
     @EventListener
     public void sendPoint(SimpleOrderCreatePointFailEvent event) {
-        simplePointService.sendSimpleOrderFail(event.getOrder());
+        simplePointService.processSimpleOrderFail(event.getOrder());
     }
 
     @Order(2)
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreatePointFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @Order(3)

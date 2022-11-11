@@ -14,8 +14,8 @@ public class SimplePointService {
     private final UserPointRepository userPointRepository;
 
     @Transactional
-    public void sendSimpleOrder(SimpleOrder simpleOrder) {
-        log.info("PointService: Start send Simple order " + simpleOrder + " to point System");
+    public void processSimpleOrder(SimpleOrder simpleOrder) {
+        log.info("PointService: Start process Simple order " + simpleOrder + " to point System");
         UserPoint userPoint = new UserPoint(simpleOrder.getUserEmail(), getPointByPolicy(simpleOrder));
         userPointRepository.save(userPoint);
         try {
@@ -23,15 +23,15 @@ public class SimplePointService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        log.info("PointService: Complete sent point");
+        log.info("PointService: Complete process point");
     }
 
     @Transactional
-    public void sendSimpleOrderFail(SimpleOrder simpleOrder) {
-        log.info("PointService: Start send Simple order " + simpleOrder + " to point System");
+    public void processSimpleOrderFail(SimpleOrder simpleOrder) {
+        log.info("PointService: Start process Simple order " + simpleOrder + " to point System");
         UserPoint userPoint = new UserPoint(simpleOrder.getUserEmail(), getPointByPolicy(simpleOrder));
         userPointRepository.save(userPoint);
-        throw new RuntimeException("PointService: Fail to send point");
+        throw new RuntimeException("PointService: Fail to process point");
     }
 
     private Long getPointByPolicy(SimpleOrder simpleOrder) {

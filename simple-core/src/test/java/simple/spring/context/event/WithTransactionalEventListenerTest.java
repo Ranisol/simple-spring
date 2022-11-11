@@ -66,11 +66,27 @@ public class WithTransactionalEventListenerTest {
     }
 
     @Test
-    public void pointFailEvent() throws InterruptedException {
-        Assertions.assertDoesNotThrow(() -> {
+    public void pointFailEventBeforeCommit() throws InterruptedException {
+        Assertions.assertThrows(RuntimeException.class, () -> {
             simpleOrderService.createOrderWithPointFail();
         });
         Thread.sleep(2000);
+        List<Orders> list = ordersRepository.findAll();
+        List<UserPoint> userPoints = userPointRepository.findAll();
+
+        Assertions.assertEquals(0, list.size());
+        Assertions.assertEquals(0, userPoints.size());
+
+        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(SimpleOrderCreatePointFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(0)).sendRealtimeStatics(Mockito.any(SimpleOrderCreatePointFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(0)).sendMail(Mockito.any(SimpleOrderCreatePointFailEvent.class));
+    }
+
+    @Test
+    public void pointFailEventAfterCommit() {
+        Assertions.assertDoesNotThrow(() -> {
+            simpleOrderService.createOrderWithPointFail();
+        });
         List<Orders> list = ordersRepository.findAll();
         List<UserPoint> userPoints = userPointRepository.findAll();
 

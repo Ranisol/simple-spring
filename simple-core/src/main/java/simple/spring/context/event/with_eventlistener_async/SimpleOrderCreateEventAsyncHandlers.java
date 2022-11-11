@@ -27,13 +27,13 @@ public class SimpleOrderCreateEventAsyncHandlers {
     @Async
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreateEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @Async
     @EventListener
     public void sendPoint(SimpleOrderCreateEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // statics fail events
@@ -46,13 +46,13 @@ public class SimpleOrderCreateEventAsyncHandlers {
     @Async
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreateStaticsFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrderFail(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrderFail(event.getOrder());
     }
 
     @Async
     @EventListener
     public void sendPoint(SimpleOrderCreateStaticsFailEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // point fail events
@@ -65,13 +65,13 @@ public class SimpleOrderCreateEventAsyncHandlers {
     @Async
     @EventListener
     public void sendRealtimeStatics(SimpleOrderCreatePointFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @Async
     @EventListener
     public void sendPoint(SimpleOrderCreatePointFailEvent event) {
-        simplePointService.sendSimpleOrderFail(event.getOrder());
+        simplePointService.processSimpleOrderFail(event.getOrder());
     }
 
 }

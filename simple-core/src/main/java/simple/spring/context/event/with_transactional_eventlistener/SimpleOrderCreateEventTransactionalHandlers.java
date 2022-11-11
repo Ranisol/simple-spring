@@ -3,6 +3,7 @@ package simple.spring.context.event.with_transactional_eventlistener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
@@ -27,12 +28,12 @@ public class SimpleOrderCreateEventTransactionalHandlers {
 
     @TransactionalEventListener
     public void sendRealtimeStatics(SimpleOrderCreateEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void sendPoint(SimpleOrderCreateEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // statics fail events
@@ -43,28 +44,31 @@ public class SimpleOrderCreateEventTransactionalHandlers {
 
     @TransactionalEventListener
     public void sendRealtimeStatics(SimpleOrderCreateStaticsFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrderFail(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrderFail(event.getOrder());
     }
 
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void sendPoint(SimpleOrderCreateStaticsFailEvent event) {
-        simplePointService.sendSimpleOrder(event.getOrder());
+        simplePointService.processSimpleOrder(event.getOrder());
     }
 
     // point fail events
+    @Order(3)
     @TransactionalEventListener
     public void sendMail(SimpleOrderCreatePointFailEvent event) {
         simpleMailService.sendMail(event.getOrder().getUserEmail());
     }
 
+    @Order(2)
     @TransactionalEventListener
     public void sendRealtimeStatics(SimpleOrderCreatePointFailEvent event) {
-        simpleRealtimeStaticsService.sendSimpleOrder(event.getOrder());
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
     }
 
+    @Order(1)
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void sendPoint(SimpleOrderCreatePointFailEvent event) {
-        simplePointService.sendSimpleOrderFail(event.getOrder());
+        simplePointService.processSimpleOrderFail(event.getOrder());
     }
 
 }
