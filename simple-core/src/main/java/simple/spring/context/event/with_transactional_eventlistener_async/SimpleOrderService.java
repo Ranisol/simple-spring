@@ -33,6 +33,15 @@ public class SimpleOrderService {
         publishCreateOrderWithRealStaticsFailEvent(event);
     }
 
+    @Transactional
+    public void createOrderWithPointFail() {
+        log.info("Creating order");
+        SimpleOrder order = new SimpleOrder("userEmail", 10L, 300L);
+        saveOrderBySimpleOrder(order);
+        SimpleOrderCreatePointFailEvent event = new SimpleOrderCreatePointFailEvent(order);
+        eventPublisher.publishEvent(event);
+    }
+
     private void publishCreateOrderEvent(SimpleOrderCreateEvent event) {
         eventPublisher.publishEvent(event);
     }

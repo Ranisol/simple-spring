@@ -13,7 +13,6 @@ import simple.spring.context.event.service_texture.entity.Orders;
 import simple.spring.context.event.service_texture.entity.UserPoint;
 import simple.spring.context.event.service_texture.repository.OrdersRepository;
 import simple.spring.context.event.service_texture.repository.UserPointRepository;
-import simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateEventAsyncHandlers;
 import simple.spring.context.event.with_transactional_eventlistener_async.*;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class WithTransactionalEventListenerAsyncTest {
     @Autowired
     UserPointRepository userPointRepository;
     @SpyBean
-    SimpleOrderCreateEventAsyncHandlers handlers;
+    SimpleOrderCreateEventTransactionalAsyncHandlers handlers;
 
     @BeforeEach
     public void cleanup() {
@@ -42,9 +41,9 @@ public class WithTransactionalEventListenerAsyncTest {
         List<Orders> list = ordersRepository.findAll();
         Thread.sleep(2000);
         Assertions.assertEquals(1, list.size());
-        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(SimpleOrderCreateEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(SimpleOrderCreateEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(SimpleOrderCreateEvent.class));
     }
 
     // 비동기적으로 작동하고 다른 트랜잭션 공유 => 중간에 터지면, 이벤트 퍼블리셔 온전  + 터진 이벤트 리스너 롤백 + 모든 이벤트 호출
@@ -60,15 +59,15 @@ public class WithTransactionalEventListenerAsyncTest {
         Assertions.assertEquals(1, list.size());
         Assertions.assertEquals(1, userPoints.size());
 
-        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateStaticsFailEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateStaticsFailEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreateStaticsFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(SimpleOrderCreateStaticsFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(SimpleOrderCreateStaticsFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(SimpleOrderCreateStaticsFailEvent.class));
     }
 
     @Test
-    public void pointFailEvent() throws InterruptedException {
+    public void pointFailEventBeforeCommit() throws InterruptedException {
         Assertions.assertDoesNotThrow(() -> {
-            simpleOrderService.createOrderWithRealStaticsFail();
+            simpleOrderService.createOrderWithPointFail();
         });
         Thread.sleep(2000);
         List<Orders> list = ordersRepository.findAll();
@@ -77,8 +76,8 @@ public class WithTransactionalEventListenerAsyncTest {
         Assertions.assertEquals(1, list.size());
         Assertions.assertEquals(0, userPoints.size());
 
-        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreatePointFailEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreatePointFailEvent.class));
-        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(simple.spring.context.event.with_eventlistener_async.SimpleOrderCreatePointFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendPoint(Mockito.any(SimpleOrderCreatePointFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendRealtimeStatics(Mockito.any(SimpleOrderCreatePointFailEvent.class));
+        Mockito.verify(handlers, Mockito.times(1)).sendMail(Mockito.any(SimpleOrderCreatePointFailEvent.class));
     }
 }

@@ -55,4 +55,22 @@ public class SimpleOrderCreateEventTransactionalAsyncHandlers {
     public void sendPoint(SimpleOrderCreateStaticsFailEvent event) {
         simplePointService.processSimpleOrder(event.getOrder());
     }
+
+    @Async
+    @TransactionalEventListener
+    public void sendMail(SimpleOrderCreatePointFailEvent event) {
+        simpleMailService.sendMail(event.getOrder().getUserEmail());
+    }
+
+    @Async
+    @TransactionalEventListener
+    public void sendRealtimeStatics(SimpleOrderCreatePointFailEvent event) {
+        simpleRealtimeStaticsService.processSimpleOrder(event.getOrder());
+    }
+
+    @Async
+    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+    public void sendPoint(SimpleOrderCreatePointFailEvent event) {
+        simplePointService.processSimpleOrderFail(event.getOrder());
+    }
 }

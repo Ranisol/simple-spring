@@ -1,3 +1,5 @@
+
+
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
@@ -8,18 +10,15 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
-    // mybatis
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-    // spring boot test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // test h2 database
-    testImplementation 'com.h2database:h2'
-    // mysql jdbc driver
-    implementation 'mysql:mysql-connector-java'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // junit vintage engine for junit 4 tests
+    testImplementation 'org.junit.vintage:junit-vintage-engine'
 
 }
+
+
+
+
 
 bootJar {
     enabled = false
