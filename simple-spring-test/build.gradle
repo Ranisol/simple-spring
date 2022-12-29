@@ -10,15 +10,25 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // postgresql
+    implementation 'org.postgresql:postgresql:42.2.27'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // junit vintage engine for junit 4 tests
     testImplementation 'org.junit.vintage:junit-vintage-engine'
     // h2 database for test
     testImplementation 'com.h2database:h2'
 
-    // jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // test container
+    testImplementation 'org.testcontainers:junit-jupiter:1.17.3'
+    // https://mvnrepository.com/artifact/org.testcontainers/postgresql
+    testImplementation 'org.testcontainers:postgresql:1.17.3'
+
+
 }
 
 
