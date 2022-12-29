@@ -1,4 +1,4 @@
-package simple.spring.junit4;
+package simple.spring.tst.junit4;
 
 import org.junit.Before;
 import org.junit.Test;

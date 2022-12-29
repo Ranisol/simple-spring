@@ -1,4 +1,4 @@
-package simple.spring.junit5;
+package simple.spring.tst.junit5;
 
 import static org.junit.jupiter.api.Assumptions.*;
 import static org.junit.jupiter.api.Assertions.*;

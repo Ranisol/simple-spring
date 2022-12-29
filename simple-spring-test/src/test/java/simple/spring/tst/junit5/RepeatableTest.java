@@ -1,4 +1,4 @@
-package simple.spring.junit5;
+package simple.spring.tst.junit5;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Tag;
+
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;

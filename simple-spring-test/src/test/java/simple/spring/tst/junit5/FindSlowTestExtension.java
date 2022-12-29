@@ -1,4 +1,4 @@
-package simple.spring.junit5;
+package simple.spring.tst.junit5;
 
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
@@ -25,7 +25,7 @@ public class FindSlowTestExtension implements BeforeTestExecutionCallback, After
     @Override
     public void afterTestExecution(ExtensionContext context) {
         Method requiredTestMethod = context.getRequiredTestMethod();
-        SlowTest annotation = requiredTestMethod.getAnnotation(SlowTest.class);
+        SlowTest annotation = requiredTestMethod.getAnnotation(simple.spring.tst.junit5.SlowTest.class);
         if(annotation != null) {
             return;
         }

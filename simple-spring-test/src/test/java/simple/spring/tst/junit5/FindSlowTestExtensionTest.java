@@ -1,15 +1,15 @@
-package simple.spring.junit5;
+package simple.spring.tst.junit5;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-@ExtendWith(FindSlowTestExtension.class)
+@ExtendWith(simple.spring.tst.junit5.FindSlowTestExtension.class)
 public class FindSlowTestExtensionTest {
 
     // FindSlowTestExtension에 인자가 필요한 경우
     @RegisterExtension
-    static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
+    static simple.spring.tst.junit5.FindSlowTestExtension findSlowTestExtension = new simple.spring.tst.junit5.FindSlowTestExtension(1000L);
 
     @Test
     void testA() throws InterruptedException {
