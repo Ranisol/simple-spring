@@ -4,6 +4,7 @@ import com.github.dockerjava.zerodep.shaded.org.apache.hc.client5.http.classic.m
 import de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties;
 import de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties;
 import de.codecentric.spring.boot.chaos.monkey.endpoints.dto.ChaosMonkeyStatusResponseDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.JsonNode;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.node.ObjectNode;
-
+import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.net.URI;
 import java.time.Duration;
@@ -46,7 +47,7 @@ public class ChaosMonkeyTest {
     }
 
     @Test
-    void getStatus() {
+    void checkStatus() {
         ResponseEntity<ChaosMonkeyStatusResponseDto> response =
                 restTemplate.exchange(
                         URI.create("http://localhost:8080/actuator/chaosmonkey/status"),
@@ -66,7 +67,7 @@ public class ChaosMonkeyTest {
                         RequestEntity.EMPTY,
                         ChaosMonkeyStatusResponseDto.class
                 );
-        System.out.println(response.getBody());
+        assertTrue(response.getBody().isEnabled());
     }
 
     @Test
@@ -78,11 +79,12 @@ public class ChaosMonkeyTest {
                         RequestEntity.EMPTY,
                         WatcherProperties.class
                 );
+        ;
         System.out.println(response.getBody());
     }
 
     @Test
-    void checkAssert() {
+    void checkAssaults() {
         ResponseEntity<AssaultProperties> response =
                 restTemplate.exchange(
                         URI.create("http://localhost:8080/actuator/chaosmonkey/assaults"),
@@ -94,12 +96,14 @@ public class ChaosMonkeyTest {
     }
 
     @Test
-    void setupAssaults() {
+    void setupLatencyAssaults() {
+        enableChaosMonkey();
         HashMap<String, Object> body =new HashMap<String, Object>();
-        body.put("latencyRangeStart", "1000");
-        body.put("latencyRangeEnd", "2000");
+        body.put("latencyRangeStart", "3000");
+        body.put("latencyRangeEnd", "5000");
         body.put("latencyActive", "true");
         body.put("level", "3");
+        body.put("exceptionsActive", "false");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -111,13 +115,31 @@ public class ChaosMonkeyTest {
                 URI.create("http://localhost:8080/actuator/chaosmonkey/assaults")
         );
 
-        ResponseEntity response = restTemplate.exchange(
-                request,
-                Void.class
-        );
-        System.out.println(response.getStatusCode());
-        System.out.println(response.getBody());
+        restTemplate.exchange(request, Void.class);
+        checkAssaults();
     }
 
+    @Test
+    void setupExceptionsAssaults() {
+        enableChaosMonkey();
+        HashMap<String, Object> body =new HashMap<String, Object>();
+        body.put("latencyActive", "false");
+        body.put("exceptionsActive", "true");
+        body.put("exceptions", "java.lang.RuntimeException");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        RequestEntity<Object> request = new RequestEntity<>(
+                body,
+                headers,
+                HttpMethod.POST,
+                URI.create("http://localhost:8080/actuator/chaosmonkey/assaults")
+        );
+
+        ResponseEntity response = restTemplate.exchange(request, Void.class);
+        checkStatus();
+        checkAssaults();
+    }
 
 }
