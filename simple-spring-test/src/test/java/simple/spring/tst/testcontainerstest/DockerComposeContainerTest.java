@@ -14,15 +14,17 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import simple.spring.tst.texture.*;
+import simple.spring.tst.domain.Member;
+import simple.spring.tst.domain.Study;
+import simple.spring.tst.member.MemberRepository;
+import simple.spring.tst.member.MemberServiceImpl;
+import simple.spring.tst.study.StudyRepository;
+import simple.spring.tst.study.StudyService;
 
 import javax.transaction.Transactional;
 

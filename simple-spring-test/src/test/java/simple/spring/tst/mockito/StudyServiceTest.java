@@ -7,13 +7,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
-import simple.spring.tst.texture.*;
+import simple.spring.tst.domain.Member;
+import simple.spring.tst.domain.Study;
+import simple.spring.tst.member.MemberService;
+import simple.spring.tst.study.StudyRepository;
+import simple.spring.tst.study.StudyService;
 
 import java.util.Optional;
 

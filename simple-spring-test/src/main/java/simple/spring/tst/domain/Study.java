@@ -1,4 +1,4 @@
-package simple.spring.tst.texture;
+package simple.spring.tst.domain;
 
 import lombok.*;
 

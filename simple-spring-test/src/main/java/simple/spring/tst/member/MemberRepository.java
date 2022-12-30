@@ -1,7 +1,7 @@
-package simple.spring.tst.texture;
+package simple.spring.tst.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import simple.spring.tst.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 }

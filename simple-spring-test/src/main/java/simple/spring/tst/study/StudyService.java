@@ -1,7 +1,10 @@
-package simple.spring.tst.texture;
+package simple.spring.tst.study;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import simple.spring.tst.domain.Member;
+import simple.spring.tst.domain.Study;
+import simple.spring.tst.member.MemberService;
 
 import java.util.Optional;
 

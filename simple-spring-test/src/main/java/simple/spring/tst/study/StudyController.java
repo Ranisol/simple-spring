@@ -1,9 +1,8 @@
-package simple.spring.tst.texture;
+package simple.spring.tst.study;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
+import simple.spring.tst.domain.Study;
 
 @RestController
 @RequestMapping("/study")

@@ -27,6 +27,9 @@ dependencies {
     // h2 database for test
     testImplementation 'com.h2database:h2'
 
+    // archunit for testing architecture
+    testImplementation 'com.tngtech.archunit:archunit-junit5:0.21.0'
+
     // test container
     testImplementation 'org.testcontainers:junit-jupiter:1.17.3'
     // https://mvnrepository.com/artifact/org.testcontainers/postgresql

@@ -38,6 +38,10 @@ public class ChaosMonkeyTest {
 
     transient RestTemplate restTemplate;
 
+    private String getUrl(String path) {
+        return "http://localhost:8080/actuator/chaosmonkey/" + path;
+    }
+
     @BeforeAll
     void beforeAll() {
         restTemplate = restTemplateBuilder
@@ -50,7 +54,7 @@ public class ChaosMonkeyTest {
     void checkStatus() {
         ResponseEntity<ChaosMonkeyStatusResponseDto> response =
                 restTemplate.exchange(
-                        URI.create("http://localhost:8080/actuator/chaosmonkey/status"),
+                        URI.create(getUrl("status")),
                         HttpMethod.GET,
                         RequestEntity.EMPTY,
                         ChaosMonkeyStatusResponseDto.class
@@ -62,7 +66,7 @@ public class ChaosMonkeyTest {
     void enableChaosMonkey() {
         ResponseEntity<ChaosMonkeyStatusResponseDto> response =
                 restTemplate.exchange(
-                        URI.create("http://localhost:8080/actuator/chaosmonkey/enable"),
+                        URI.create(getUrl("enable")),
                         HttpMethod.POST,
                         RequestEntity.EMPTY,
                         ChaosMonkeyStatusResponseDto.class
@@ -74,7 +78,7 @@ public class ChaosMonkeyTest {
     void checkWatchers() {
         ResponseEntity<WatcherProperties> response =
                 restTemplate.exchange(
-                        URI.create("http://localhost:8080/actuator/chaosmonkey/watchers"),
+                        URI.create(getUrl("watchers")),
                         HttpMethod.GET,
                         RequestEntity.EMPTY,
                         WatcherProperties.class
@@ -87,7 +91,7 @@ public class ChaosMonkeyTest {
     void checkAssaults() {
         ResponseEntity<AssaultProperties> response =
                 restTemplate.exchange(
-                        URI.create("http://localhost:8080/actuator/chaosmonkey/assaults"),
+                        URI.create(getUrl("assaults")),
                         HttpMethod.GET,
                         RequestEntity.EMPTY,
                         AssaultProperties.class
@@ -112,7 +116,7 @@ public class ChaosMonkeyTest {
                 body,
                 headers,
                 HttpMethod.POST,
-                URI.create("http://localhost:8080/actuator/chaosmonkey/assaults")
+                URI.create(getUrl("assaults"))
         );
 
         restTemplate.exchange(request, Void.class);
@@ -134,7 +138,7 @@ public class ChaosMonkeyTest {
                 body,
                 headers,
                 HttpMethod.POST,
-                URI.create("http://localhost:8080/actuator/chaosmonkey/assaults")
+                URI.create(getUrl("assaults"))
         );
 
         ResponseEntity response = restTemplate.exchange(request, Void.class);
