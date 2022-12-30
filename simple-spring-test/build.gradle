@@ -16,6 +16,10 @@ dependencies {
 
     // postgresql
     implementation 'org.postgresql:postgresql:42.2.27'
+    // spring boot actuators
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // spring boot chaos monkey
+    implementation 'de.codecentric:chaos-monkey-spring-boot:2.7.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // junit vintage engine for junit 4 tests

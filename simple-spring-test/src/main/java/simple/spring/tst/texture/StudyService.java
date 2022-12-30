@@ -11,6 +11,11 @@ public class StudyService {
     private final MemberService memberService;
     private final StudyRepository studyRepository;
 
+    public Study get(Long id) {
+        Optional<Study> study = studyRepository.findById(id);
+        return study.orElseThrow(() -> new IllegalArgumentException("Study not found"));
+    }
+
     public Study createNewStudy(String name) {
         Study study = new Study();
         study.setName(name);
